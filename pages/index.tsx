@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import styles from './page.module.css';
+import styles from './index.module.css';
 
 export default function Home() {
   const [name, setName] = useState('');
