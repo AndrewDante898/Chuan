@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import styles from './ClientTable.module.css'; // Ensure the CSS file is imported
+import styles from './ClientTable.module.css';
+import * as XLSX from 'xlsx';
 
 interface Client {
     created_at: string;
@@ -15,32 +16,55 @@ export default function ClientTable() {
     const [clients, setClients] = useState<Client[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [filters, setFilters] = useState({
+        searchTerm: '',
+        ic: '',
+        phone: '',
+        roomNumber: '',
+        startDate: '',
+        endDate: '',
+    });
+    const [appliedFilters, setAppliedFilters] = useState(filters);
 
     useEffect(() => {
         async function fetchClients() {
-            const response = await fetch('/api/getClient');
+            const query = new URLSearchParams(appliedFilters).toString();
+            const response = await fetch(`/api/getClient?${query}`);
             const data = await response.json();
             setClients(data);
         }
 
         fetchClients();
-    }, []);
+    }, [appliedFilters]);
 
-    // Calculate the index of the last client on the current page
     const indexOfLastClient = currentPage * itemsPerPage;
     const indexOfFirstClient = indexOfLastClient - itemsPerPage;
     const currentClients = clients.slice(indexOfFirstClient, indexOfLastClient);
 
-    // Handle page change
     const handlePageChange = (page: number) => setCurrentPage(page);
 
-    // Handle items per page change
     const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setItemsPerPage(Number(e.target.value));
-        setCurrentPage(1); // Reset to first page on items per page change
+        setCurrentPage(1);
     };
 
-    // Create page numbers
+    const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilters(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setAppliedFilters(filters);
+        setCurrentPage(1);
+    };
+
+    const exportToExcel = () => {
+        const worksheet = XLSX.utils.json_to_sheet(clients); // Export entire filtered dataset
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Clients");
+        XLSX.writeFile(workbook, "ClientsData.xlsx");
+    };
+
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(clients.length / itemsPerPage); i++) {
         pageNumbers.push(i);
@@ -50,6 +74,58 @@ export default function ClientTable() {
         <div className={styles.main}>
             <div className={styles.tableContainer}>
                 <h1>Client Table</h1>
+                <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
+                    <input
+                        type="text"
+                        name="searchTerm"
+                        placeholder="Search by name..."
+                        value={filters.searchTerm}
+                        onChange={handleFilterChange}
+                        className={styles.searchInput}
+                    />
+                    <input
+                        type="text"
+                        name="ic"
+                        placeholder="Filter by IC number..."
+                        value={filters.ic}
+                        onChange={handleFilterChange}
+                        className={styles.searchInput}
+                    />
+                    <input
+                        type="text"
+                        name="phone"
+                        placeholder="Filter by phone number..."
+                        value={filters.phone}
+                        onChange={handleFilterChange}
+                        className={styles.searchInput}
+                    />
+                    <input
+                        type="text"
+                        name="roomNumber"
+                        placeholder="Filter by room number..."
+                        value={filters.roomNumber}
+                        onChange={handleFilterChange}
+                        className={styles.searchInput}
+                    />
+                    <input
+                        type="date"
+                        name="startDate"
+                        value={filters.startDate}
+                        onChange={handleFilterChange}
+                        className={styles.searchInput}
+                    />
+                    <input
+                        type="date"
+                        name="endDate"
+                        value={filters.endDate}
+                        onChange={handleFilterChange}
+                        className={styles.searchInput}
+                    />
+                    <div className={styles.buttonGroup}>
+                        <button type="submit" className={styles.searchButton}>Search</button>
+                        <button onClick={exportToExcel} className={styles.exportButton}>Export to Excel</button>
+                    </div>
+                </form>
                 <table className={styles.dataTable}>
                     <thead>
                     <tr>

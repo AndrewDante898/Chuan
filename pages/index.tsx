@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import Image from 'next/image';
 import styles from './index.module.css';
 
 export default function Home() {
@@ -11,11 +10,12 @@ export default function Home() {
   const [phone, setPhone] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
   const [success, setSuccess] = useState<string | null>(null);
-  const [entries, setEntries] = useState<{ name: string; ic: string; phone: string; roomNumber: string }[]>([]);
+  const [entries, setEntries] = useState<{ name: string; ic: string; phone: string; roomNumber: string; created_at: string }[]>([]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newEntry = { name, ic, phone, roomNumber };
+    const currentTime = new Date().toLocaleString(); // Get the current date and time
+    const newEntry = { name, ic, phone, roomNumber, created_at: currentTime };
 
     try {
       // Send POST request to the API route
@@ -47,43 +47,47 @@ export default function Home() {
           {success && <div className={styles.successMessage}>{success}</div>}
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formField}>
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="name" className={styles.label}>Name:</label>
               <input
                   id="name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
+                  className={styles.input}
               />
             </div>
             <div className={styles.formField}>
-              <label htmlFor="ic">IC:</label>
+              <label htmlFor="ic" className={styles.label}>IC:</label>
               <input
                   id="ic"
                   type="text"
                   value={ic}
                   onChange={(e) => setIc(e.target.value)}
                   required
+                  className={styles.input}
               />
             </div>
             <div className={styles.formField}>
-              <label htmlFor="phone">Phone:</label>
+              <label htmlFor="phone" className={styles.label}>Phone:</label>
               <input
                   id="phone"
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
+                  className={styles.input}
               />
             </div>
             <div className={styles.formField}>
-              <label htmlFor="roomNumber">Room Number:</label>
+              <label htmlFor="roomNumber" className={styles.label}>Room Number:</label>
               <input
                   id="roomNumber"
                   type="text"
                   value={roomNumber}
                   onChange={(e) => setRoomNumber(e.target.value)}
                   required
+                  className={styles.input}
               />
             </div>
             <button type="submit" className={styles.submitButton}>
@@ -93,7 +97,6 @@ export default function Home() {
         </div>
 
         <div className={styles.tableContainer}>
-          <h2>Submitted Data</h2>
           <table className={styles.dataTable}>
             <thead>
             <tr>
@@ -101,6 +104,7 @@ export default function Home() {
               <th>IC</th>
               <th>Phone</th>
               <th>Room Number</th>
+              <th>Time Submitted</th> {/* New column for time */}
             </tr>
             </thead>
             <tbody>
@@ -110,6 +114,7 @@ export default function Home() {
                   <td>{entry.ic}</td>
                   <td>{entry.phone}</td>
                   <td>{entry.roomNumber}</td>
+                  <td>{entry.created_at}</td> {/* Display the time */}
                 </tr>
             ))}
             </tbody>

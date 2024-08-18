@@ -1,17 +1,53 @@
+/* src/app/ClientTable.module.css */
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-left: 20px; /* Adjusted to a smaller value */
 }
 
 .tableContainer {
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    margin-top: 40px;
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px; /* Increase max-width if needed */
+}
+
+.searchForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.searchInput {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex: 1;
+    min-width: 120px; /* Minimum width for inputs */
+}
+
+.searchButton, .exportButton {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #0070f3;
+    color: white;
+    margin: 5px;
+}
+
+.searchButton:hover, .exportButton:hover {
+    background-color: #005bb5;
+}
+
+.exportButton {
+    background-color: #4CAF50; /* Green background for export button */
+}
+
+.exportButton:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
 
 .dataTable {
@@ -30,25 +66,14 @@
     font-weight: bold;
 }
 
-.dataTable tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.dataTable tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Pagination styles */
 .paginationContainer {
     display: flex;
-    flex-direction: column;
     align-items: center;
     margin-top: 20px;
 }
 
 .dropdown {
-    margin-bottom: 10px;
-    padding: 5px;
+    margin-right: 20px;
 }
 
 .pagination {
@@ -57,17 +82,13 @@
 }
 
 .pagination button {
-    padding: 5px 10px;
-    border: none;
-    background-color: #1b2838;
-    color: white;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     cursor: pointer;
 }
 
 .pagination button.active {
-    background-color: #34495e;
-}
-
-.pagination button:hover {
-    background-color: #1abc9c;
+    background-color: #0070f3;
+    color: white;
 }

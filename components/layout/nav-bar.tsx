@@ -17,11 +17,6 @@ function NavBar() {
                             <div className={styles.navLink}>Client Table</div>
                         </Link>
                     </li>
-                    <li>
-                        <Link href="/test">
-                            <div className={styles.navLink}>Test</div>
-                        </Link>
-                    </li>
                 </ul>
             </nav>
         </Fragment>
