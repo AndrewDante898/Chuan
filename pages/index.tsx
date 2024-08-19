@@ -41,85 +41,89 @@ export default function Home() {
   };
 
   return (
-      <main className={styles.main}>
-        <div className={styles.adminForm}>
-          <h2>Admin Data Entry</h2>
-          {success && <div className={styles.successMessage}>{success}</div>}
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.formField}>
-              <label htmlFor="name" className={styles.label}>Name:</label>
-              <input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className={styles.input}
-              />
+      <div className={styles.pageWrapper}>
+        <main className={styles.main}>
+          <div className={styles.container}>
+            <div className={styles.adminForm}>
+              <h2>Admin Data Entry</h2>
+              {success && <div className={styles.successMessage}>{success}</div>}
+              <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.formField}>
+                  <label htmlFor="name" className={styles.label}>Name:</label>
+                  <input
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className={styles.input}
+                  />
+                </div>
+                <div className={styles.formField}>
+                  <label htmlFor="ic" className={styles.label}>IC:</label>
+                  <input
+                      id="ic"
+                      type="text"
+                      value={ic}
+                      onChange={(e) => setIc(e.target.value)}
+                      required
+                      className={styles.input}
+                  />
+                </div>
+                <div className={styles.formField}>
+                  <label htmlFor="phone" className={styles.label}>Phone:</label>
+                  <input
+                      id="phone"
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                      className={styles.input}
+                  />
+                </div>
+                <div className={styles.formField}>
+                  <label htmlFor="roomNumber" className={styles.label}>Room Number:</label>
+                  <input
+                      id="roomNumber"
+                      type="text"
+                      value={roomNumber}
+                      onChange={(e) => setRoomNumber(e.target.value)}
+                      required
+                      className={styles.input}
+                  />
+                </div>
+                <button type="submit" className={styles.submitButton}>
+                  Submit
+                </button>
+              </form>
             </div>
-            <div className={styles.formField}>
-              <label htmlFor="ic" className={styles.label}>IC:</label>
-              <input
-                  id="ic"
-                  type="text"
-                  value={ic}
-                  onChange={(e) => setIc(e.target.value)}
-                  required
-                  className={styles.input}
-              />
-            </div>
-            <div className={styles.formField}>
-              <label htmlFor="phone" className={styles.label}>Phone:</label>
-              <input
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                  className={styles.input}
-              />
-            </div>
-            <div className={styles.formField}>
-              <label htmlFor="roomNumber" className={styles.label}>Room Number:</label>
-              <input
-                  id="roomNumber"
-                  type="text"
-                  value={roomNumber}
-                  onChange={(e) => setRoomNumber(e.target.value)}
-                  required
-                  className={styles.input}
-              />
-            </div>
-            <button type="submit" className={styles.submitButton}>
-              Submit
-            </button>
-          </form>
-        </div>
 
-        <div className={styles.tableContainer}>
-          <table className={styles.dataTable}>
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>IC</th>
-              <th>Phone</th>
-              <th>Room Number</th>
-              <th>Time Submitted</th> {/* New column for time */}
-            </tr>
-            </thead>
-            <tbody>
-            {entries.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.name}</td>
-                  <td>{entry.ic}</td>
-                  <td>{entry.phone}</td>
-                  <td>{entry.roomNumber}</td>
-                  <td>{entry.created_at}</td> {/* Display the time */}
+            <div className={styles.tableContainer}>
+              <table className={styles.dataTable}>
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>IC</th>
+                  <th>Phone</th>
+                  <th>Room Number</th>
+                  <th>Time Submitted</th> {/* New column for time */}
                 </tr>
-            ))}
-            </tbody>
-          </table>
-        </div>
-      </main>
+                </thead>
+                <tbody>
+                {entries.map((entry, index) => (
+                    <tr key={index}>
+                      <td>{entry.name}</td>
+                      <td>{entry.ic}</td>
+                      <td>{entry.phone}</td>
+                      <td>{entry.roomNumber}</td>
+                      <td>{entry.created_at}</td> {/* Display the time */}
+                    </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
   );
 }

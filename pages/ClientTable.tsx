@@ -70,10 +70,15 @@ export default function ClientTable() {
         pageNumbers.push(i);
     }
 
+    // Calculate the summary information
+    const totalRecords = clients.length;
+    const displayedFrom = indexOfFirstClient + 1;
+    const displayedTo = Math.min(indexOfLastClient, totalRecords);
+
     return (
         <div className={styles.main}>
-            <div className={styles.tableContainer}>
-                <h1>Client Table</h1>
+            <div className={`${styles.tableContainer} ${styles.section}`}>
+                <h2 className={styles.sectionTitle}>Search & Export</h2>
                 <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
                     <input
                         type="text"
@@ -107,29 +112,43 @@ export default function ClientTable() {
                         onChange={handleFilterChange}
                         className={styles.searchInput}
                     />
-                    <input
-                        type="date"
-                        name="startDate"
-                        value={filters.startDate}
-                        onChange={handleFilterChange}
-                        className={styles.searchInput}
-                    />
-                    <input
-                        type="date"
-                        name="endDate"
-                        value={filters.endDate}
-                        onChange={handleFilterChange}
-                        className={styles.searchInput}
-                    />
+                    <div className={styles.dateRange}>
+                        <label className={styles.searchLabel} htmlFor="startDate">Start Date</label>
+                        <input
+                            type="date"
+                            id="startDate"
+                            name="startDate"
+                            value={filters.startDate}
+                            onChange={handleFilterChange}
+                            className={styles.searchInput}
+                        />
+                        <label className={styles.searchLabel} htmlFor="endDate">End Date</label>
+                        <input
+                            type="date"
+                            id="endDate"
+                            name="endDate"
+                            value={filters.endDate}
+                            onChange={handleFilterChange}
+                            className={styles.searchInput}
+                        />
+                    </div>
                     <div className={styles.buttonGroup}>
                         <button type="submit" className={styles.searchButton}>Search</button>
-                        <button onClick={exportToExcel} className={styles.exportButton}>Export to Excel</button>
+                        <button type="button" onClick={exportToExcel} className={styles.exportButton}>Export to Excel
+                        </button>
                     </div>
                 </form>
+            </div>
+
+            <div className={`${styles.tableContainer} ${styles.section}`}>
+                <h2 className={styles.sectionTitle}>Client Data</h2>
+                <div className={styles.paginationSummary}>
+                    Showing {displayedFrom} to {displayedTo} of {totalRecords} records
+                </div>
                 <table className={styles.dataTable}>
                     <thead>
                     <tr>
-                        <th>Date & Time</th>
+                        <th>Date</th>
                         <th>Name</th>
                         <th>IC Number</th>
                         <th>Phone Number</th>
@@ -139,7 +158,7 @@ export default function ClientTable() {
                     <tbody>
                     {currentClients.map((client, index) => (
                         <tr key={index}>
-                            <td>{new Date(client.created_at).toLocaleString()}</td>
+                            <td>{new Date(client.created_at).toLocaleDateString()}</td>
                             <td>{client.name}</td>
                             <td>{client.ic}</td>
                             <td>{client.phone}</td>
@@ -149,7 +168,11 @@ export default function ClientTable() {
                     </tbody>
                 </table>
                 <div className={styles.paginationContainer}>
-                    <select onChange={handleItemsPerPageChange} value={itemsPerPage} className={styles.dropdown}>
+                    <select
+                        value={itemsPerPage}
+                        onChange={handleItemsPerPageChange}
+                        className={styles.dropdown}
+                    >
                         <option value={10}>10</option>
                         <option value={20}>20</option>
                         <option value={50}>50</option>
@@ -160,7 +183,7 @@ export default function ClientTable() {
                             <button
                                 key={number}
                                 onClick={() => handlePageChange(number)}
-                                className={number === currentPage ? styles.active : ''}
+                                className={currentPage === number ? styles.active : ''}
                             >
                                 {number}
                             </button>

@@ -1,71 +1,84 @@
-/* src/app/index.module.css */
+/* Main content styling */
 .main {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  width: calc(100% - 60px); /* Adjust width based on margin */
+  max-width: 1200px;
+  box-sizing: border-box;
+  /*margin: 40px auto 0; !* Center align with space on top *!*/
+  margin-left: 30px; /* Add space on the left */
 }
 
-.adminForm {
-  margin-top: 40px;
+/* Container for both the form and the table */
+.container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Add space between Header and form */
+  overflow-x: auto;
 }
 
+/* Success message styling */
 .successMessage {
   color: green;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
+/* Form styling */
 .form {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  align-items: center;
+  align-items: flex-end; /* Align fields and button to the bottom */
 }
 
+/* Styling for form fields */
 .formField {
   display: flex;
   flex-direction: column;
   margin: 5px 0;
 }
 
+/* Label styling */
 .label {
   margin-bottom: 5px;
   font-weight: bold;
 }
 
+/* Input field styling */
 .input {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 150px; /* Adjust the width as needed */
+  width: 200px; /* Adjusted width for better alignment */
 }
 
+/* Submit button styling */
 .submitButton {
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   background-color: #0070f3;
   color: white;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
 }
 
+/* Submit button hover effect */
 .submitButton:hover {
   background-color: #005bb5;
 }
 
-.tableContainer {
-  margin-top: 40px;
-  width: 100%;
-  max-width: 800px;
-}
-
+/* Table styling */
 .dataTable {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .dataTable th, .dataTable td {

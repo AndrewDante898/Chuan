@@ -1,41 +1,91 @@
-/* src/app/ClientTable.module.css */
+/* Ensures the main content area is responsive and prevents overflow */
 .main {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
-    margin-left: 20px; /* Adjusted to a smaller value */
+    background-color: #f7f7f7;
+    margin-left: 30px; /* Keep this as is */
+    width: calc(100% - 10px); /* Extend the content area to reduce empty space on the right */
+    box-sizing: border-box;
 }
 
+/* Container for the table and search form */
 .tableContainer {
-    margin-top: 40px;
+    margin-top: 10px;
     width: 100%;
-    max-width: 1200px; /* Increase max-width if needed */
+    max-width: calc(100% - 40px); /* Adjusted to ensure it fits within padding */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-x: auto;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+/* Ensures each section takes full width */
+.section {
+    margin-bottom: 20px; /* Increased bottom margin for separation */
+    width: 100%;
+}
+
+/* Title styling for sections */
+.sectionTitle {
+    font-size: 24px;
+    margin-bottom: 15px; /* Increased margin for better spacing */
+    color: #333;
+    font-weight: 600;
+}
+
+/* Search form styling */
 .searchForm {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 15px; /* Added gap between inputs */
+    padding: 15px; /* Increased padding for better spacing */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    width: 100%;
+    max-width: 100%; /* Limit the maximum width of the form */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+/* Input styling */
 .searchInput {
-    padding: 8px;
+    padding: 12px; /* Increased padding for better input space */
     border: 1px solid #ddd;
     border-radius: 4px;
-    flex: 1;
-    min-width: 120px; /* Minimum width for inputs */
+    font-size: 14px;
+    width: 100%; /* Full width for inputs */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
+/* Label styling */
+.searchLabel {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+/* Button group styling */
+.buttonGroup {
+    display: flex;
+    gap: 15px; /* Increased space between buttons */
+    margin-top: 15px; /* Increased space above the buttons */
+}
+
+/* Search and export button styling */
 .searchButton, .exportButton {
-    padding: 10px;
+    padding: 12px 20px; /* Increased padding for better button size */
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
     background-color: #0070f3;
     color: white;
-    margin: 5px;
+    white-space: nowrap; /* Prevents text from wrapping */
 }
 
 .searchButton:hover, .exportButton:hover {
@@ -43,37 +93,62 @@
 }
 
 .exportButton {
-    background-color: #4CAF50; /* Green background for export button */
+    background-color: #4CAF50;
 }
 
 .exportButton:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049;
 }
 
+/* Data table styling */
 .dataTable {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
 }
 
+/* Table header and cells styling */
 .dataTable th, .dataTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
     text-align: left;
+    font-size: 14px;
 }
 
 .dataTable th {
     background-color: #f4f4f4;
     font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
+.dataTable tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.dataTable td {
+    color: #555;
+}
+
+/* Pagination container and button styling */
 .paginationContainer {
     display: flex;
     align-items: center;
     margin-top: 20px;
+    justify-content: space-between;
 }
 
 .dropdown {
-    margin-right: 20px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .pagination {
@@ -82,13 +157,29 @@
 }
 
 .pagination button {
-    padding: 5px;
+    padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .pagination button.active {
     background-color: #0070f3;
     color: white;
 }
+
+.pagination button:hover {
+    background-color: #005bb5;
+    color: white;
+}
+
+/* Add this to your ClientTable.module.css */
+.paginationSummary {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
