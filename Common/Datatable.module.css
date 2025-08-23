@@ -1,0 +1,69 @@
+/* Data table styling */
+.dataTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+/* Table header and cells styling */
+.dataTable th, .dataTable td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.dataTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    /* Ensure sort indicators are positioned correctly */
+    padding-right: 30px; /* Increased space for sort indicator */
+}
+
+.dataTable th.sortable {
+    position: relative;
+}
+
+/* Sorting indicator */
+.sortArrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.asc {
+    border-bottom: 7px solid #0070f3; /* Ascending arrow color */
+}
+
+.desc {
+    border-top: 7px solid #0070f3; /* Descending arrow color */
+}
+
+/* Active sort column styling */
+.dataTable th.active {
+    color: #0070f3;
+    background-color: #eaf2ff;
+}
+
+.dataTable tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.dataTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.dataTable td {
+    color: #555;
+}

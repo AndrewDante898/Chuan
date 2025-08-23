@@ -1,274 +1,185 @@
-/* Ensures the main content area is responsive and prevents overflow */
 .main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
     background-color: #f7f7f7;
-    margin-left: 30px; /* Keep this as is */
-    width: calc(100% - 60px); /* Extend the content area to reduce empty space on the right */
+    margin-left: 30px;
+    width: calc(100% - 60px);
     box-sizing: border-box;
 }
 
-/* Container for the table and search form */
 .tableContainer {
-    margin-top: 10px;
+    margin-top: 20px;
     width: 100%;
-    max-width: calc(100% - 40px); /* Adjusted to ensure it fits within padding */
+    max-width: 100%;
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
     overflow-x: auto;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box;
 }
 
-/* Ensures each section takes full width */
-.section {
-    margin-bottom: 20px; /* Increased bottom margin for separation */
-    width: 100%;
-}
-
-/* Title styling for sections */
 .sectionTitle {
-    font-size: 24px;
-    margin-bottom: 15px; /* Increased margin for better spacing */
+    font-size: 26px;
+    margin-bottom: 20px;
     color: #333;
     font-weight: 600;
 }
 
-/* Styling for the search form with improved transitions */
-.searchForm {
-    display: contents;
-    flex-direction: column; /* Stack inputs vertically */
-    gap: 15px; /* Gap between inputs */
-    padding: 15px; /* Padding for spacing */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fafafa;
-    width: 100%;
-    max-width: 100%; /* Ensure it doesn't exceed the container's width */
-    box-sizing: border-box; /* Include padding and border in total width and height */
-    transition: max-height 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease; /* Smooth transitions with a cubic-bezier curve */
-    overflow: hidden; /* Hide overflow when collapsing */
-}
-
-/* Expanded form state */
-.searchForm.expanded {
-    height: auto; /* Allow height to adjust automatically */
-    padding: 20px; /* Adjust padding for expanded state */
-    opacity: 1; /* Full opacity when expanded */
-}
-
-/* Collapsed form state */
-.searchForm.collapsed {
-    height: 80px; /* Set a fixed height for collapsed state */
-    padding: 10px; /* Adjust padding for collapsed state */
-    opacity: 0.5; /* Reduced opacity for collapsed state */
-}
-
-/* Input styling */
-.searchInput {
-    padding: 12px; /* Increased padding for better input space */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 100%; /* Full width for inputs */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-/* Label styling */
-.searchLabel {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px; /* Space between label and input */
-}
-
-/* Button group styling */
-.buttonGroup {
-    display: flex;
-    gap: 15px; /* Increased space between buttons */
-    margin-top: 15px; /* Increased space above the buttons */
-    justify-content: center; /* Center horizontally */
-}
-
-/* Search and export button styling */
-.searchButton, .exportButton {
-    padding: 12px 20px; /* Increased padding for better button size */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    background-color: #0070f3;
-    color: white;
-    white-space: nowrap; /* Prevents text from wrapping */
-}
-
-.searchButton:hover, .exportButton:hover {
-    background-color: #005bb5;
-}
-
-.exportButton {
-    background-color: #4CAF50;
-}
-
-.exportButton:hover {
-    background-color: #45a049;
-}
-
-/* Data table styling */
 .dataTable {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-/* Table header and cells styling */
 .dataTable th, .dataTable td {
-    border-bottom: 1px solid #ddd;
-    padding: 12px;
+    padding: 15px;
+    font-size: 16px;
     text-align: left;
-    font-size: 14px;
 }
 
 .dataTable th {
-    background-color: #f4f4f4;
+    background-color: #0070f3;
+    color: white;
     font-weight: bold;
+    border-bottom: 2px solid #005bb5;
     position: sticky;
     top: 0;
     z-index: 1;
     cursor: pointer;
-    /* Ensure sort indicators are positioned correctly */
-    padding-right: 30px; /* Increased space for sort indicator */
 }
 
-.dataTable th.sortable {
-    position: relative;
-}
-
-/* Sorting indicator */
-.sortArrow {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.asc {
-    border-bottom: 7px solid #0070f3; /* Ascending arrow color */
-}
-
-.desc {
-    border-top: 7px solid #0070f3; /* Descending arrow color */
-}
-
-/* Active sort column styling */
-.dataTable th.active {
-    color: #0070f3;
-    background-color: #eaf2ff;
+.dataTable td {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
 }
 
 .dataTable tr:nth-child(even) {
-    background-color: #fafafa;
+    background-color: #f9f9f9;
 }
 
 .dataTable tr:hover {
     background-color: #f1f1f1;
 }
 
-.dataTable td {
+.dataTable th, .dataTable td {
+    border-spacing: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.dataTable_info, .dataTable_paginate {
+    margin-top: 20px;
+    font-size: 14px;
     color: #555;
 }
 
-/* Pagination container and button styling */
-.paginationContainer {
+.dataTable_paginate {
+    margin-top: 30px;
     display: flex;
-    align-items: center;
-    margin-top: 20px;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
-.dropdown {
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.pagination {
-    display: flex;
-    gap: 5px;
-}
-
-.pagination button {
+.dataTable_paginate .paginate_button {
     padding: 8px 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
     background-color: white;
+    margin-left: 5px;
+    cursor: pointer;
     font-size: 14px;
-    font-weight: 600;
+    color: #0070f3;
 }
 
-.pagination button.active {
+.dataTable_paginate .paginate_button:hover {
     background-color: #0070f3;
     color: white;
 }
 
-.pagination button:hover {
-    background-color: #005bb5;
+.dataTable_length label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dataTable_length select {
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.dataTable_filter label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dataTable_filter input {
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-left: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.searchForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.searchInput {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.searchLabel {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.searchButton {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #0070f3;
     color: white;
 }
 
-/* Pagination summary styling */
-.paginationSummary {
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #555;
+.searchButton:hover {
+    background-color: #005bb5;
 }
 
-/* Arrow button styling */
-.arrowButton {
-    background: none;
-    border: none;
-    font-size: 20px; /* Adjust size as needed */
-    cursor: pointer;
-    color: #0070f3; /* Match color with other buttons */
-    margin-top: 10px; /* Space above the arrow */
-    transition: color 0.3s;
-}
-
-.arrowButton:hover {
-    color: #005bb5; /* Darker shade on hover */
-}
-
-/* Hidden search fields styling */
-.hiddenFields {
-    display: none; /* Hide fields by default */
-}
-
-/* Show hidden fields when the form is expanded */
-.showFields {
-    display: block;
-}
-
-/* Container for the toggle switch and label */
 .toggleContainer {
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between the switch and label */
-    justify-content: center; /* Center horizontally */
-    margin: 20px 0; /* Space above and below the toggle */
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-/* Switch styling */
 .switch {
     position: relative;
     display: inline-block;
@@ -314,18 +225,9 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-/* Label styling */
 .toggleLabel {
     font-size: 16px;
     color: #333;
     font-weight: 500;
 }
 
-
-/* Button group styling remains the same */
-.buttonGroup {
-    display: flex;
-    gap: 15px;
-    margin-top: 15px;
-    justify-content: center; /* Center horizontally */
-}

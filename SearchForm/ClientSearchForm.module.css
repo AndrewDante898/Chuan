@@ -1,0 +1,151 @@
+/* Styling for the search form with improved transitions */
+.searchForm {
+    display: contents;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 15px; /* Gap between inputs */
+    padding: 15px; /* Padding for spacing */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    width: 100%;
+    max-width: 100%; /* Ensure it doesn't exceed the container's width */
+    box-sizing: border-box; /* Include padding and border in total width and height */
+    transition: max-height 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease; /* Smooth transitions with a cubic-bezier curve */
+    overflow: hidden; /* Hide overflow when collapsing */
+}
+
+/* Expanded form state */
+.searchForm.expanded {
+    height: auto; /* Allow height to adjust automatically */
+    padding: 20px; /* Adjust padding for expanded state */
+    opacity: 1; /* Full opacity when expanded */
+}
+
+/* Collapsed form state */
+.searchForm.collapsed {
+    height: 80px; /* Set a fixed height for collapsed state */
+    padding: 10px; /* Adjust padding for collapsed state */
+    opacity: 0.5; /* Reduced opacity for collapsed state */
+}
+
+/* Input styling */
+.searchInput {
+    padding: 12px; /* Increased padding for better input space */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%; /* Full width for inputs */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Label styling */
+.searchLabel {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+/* Button group styling */
+.buttonGroup {
+    display: flex;
+    gap: 15px; /* Increased space between buttons */
+    margin-top: 15px; /* Increased space above the buttons */
+    justify-content: center; /* Center horizontally */
+}
+
+/* Search and export button styling */
+.searchButton, .exportButton {
+    padding: 12px 20px; /* Increased padding for better button size */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #0070f3;
+    color: white;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.searchButton:hover, .exportButton:hover {
+    background-color: #005bb5;
+}
+
+.exportButton {
+    background-color: #4CAF50;
+}
+
+.exportButton:hover {
+    background-color: #45a049;
+}
+
+/* Hidden search fields styling */
+.hiddenFields {
+    display: none; /* Hide fields by default */
+}
+
+/* Show hidden fields when the form is expanded */
+.showFields {
+    display: block;
+}
+
+/* Container for the toggle switch and label */
+.toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the switch and label */
+    justify-content: center; /* Center horizontally */
+    margin: 20px 0; /* Space above and below the toggle */
+}
+
+/* Switch styling */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #0070f3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Label styling */
+.toggleLabel {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
