@@ -6,6 +6,7 @@ import { toggleSearchForm } from '@/Redux/Reducers/SearchFormSlice';
 import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
+import { jsPDF } from "jspdf"; // ✅ added for PDF
 import styles from "./ClientTable.module.css";
 
 interface Client {
@@ -49,17 +50,28 @@ export default function ClientTable() {
                 { data: 'name' },
                 { data: 'ic' },
                 { data: 'phone' },
-                { data: 'roomNumber' }
+                { data: 'roomNumber' },
+                {   // ✅ New Invoice column
+                    data: null,
+                    render: function (data, type, row) {
+                        return `<button class="invoice-btn">Invoice</button>`;
+                    }
+                }
             ],
             order: [[0, 'desc']],
-            paging: true,       // Enable pagination
-            lengthMenu: [5, 10, 25, 50], // Page size options
-            info: true,        // Enable table information (Showing entries)
-            searching: false,   // Keep searching off, as you have a custom form
-            pageLength: 10,     // Default page size
+            paging: true,
+            lengthMenu: [5, 10, 25, 50],
+            info: true,
+            searching: false,
+            pageLength: 10,
         });
 
-        // Cleanup DataTable on component unmount
+        // ✅ Attach click handler for invoice button
+        $('#clientTable').on('click', '.invoice-btn', function () {
+            const rowData = table.row($(this).parents('tr')).data() as Client;
+            generateInvoice(rowData);
+        });
+
         return () => {
             table.destroy();
         };
@@ -73,6 +85,65 @@ export default function ClientTable() {
     const handleToggle = () => {
         dispatch(toggleSearchForm());
     };
+
+    // ✅ PDF generator
+    function generateInvoice(data: Client) {
+        const doc = new jsPDF();
+
+        // === Header Background ===
+        doc.setFillColor(52, 152, 219); // nice blue
+        doc.rect(0, 0, 210, 30, "F"); // full-width bar (A4 width = 210mm)
+
+        // === Header Text ===
+        doc.setFontSize(20);
+        doc.setTextColor(255, 255, 255); // white text
+        doc.setFont("helvetica", "bold");
+        doc.text("Lea's Guest House", 105, 20, { align: "center" });
+
+        // === Invoice Title ===
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(0, 0, 0); // reset back to black
+        doc.text("Booking Invoice", 105, 45, { align: "center" });
+
+        // === Guest Details Box ===
+        doc.setFillColor(236, 240, 241); // light grey background
+        doc.rect(20, 55, 170, 60, "F");
+
+        doc.setFontSize(12);
+        doc.setTextColor(44, 62, 80); // dark grey/blue text
+        let y = 65;
+        doc.text(`Date: ${new Date(data.created_at).toLocaleDateString()}`, 25, y);
+        y += 10;
+        doc.text(`Guest Name: ${data.name}`, 25, y);
+        y += 10;
+        doc.text(`IC Number: ${data.ic}`, 25, y);
+        y += 10;
+        doc.text(`Phone: ${data.phone}`, 25, y);
+        y += 10;
+        doc.text(`Room Number: ${data.roomNumber}`, 25, y);
+
+        // === Divider Line ===
+        y += 15;
+        doc.setDrawColor(52, 152, 219); // blue line
+        doc.setLineWidth(0.5);
+        doc.line(20, y, 190, y);
+
+        // === Footer / Thanks ===
+        y += 20;
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(12);
+        doc.setTextColor(52, 73, 94);
+        doc.text("Thank you for choosing Lea's Guest House!", 105, y, { align: "center" });
+
+        // === Footer Highlight Bar ===
+        y += 10;
+        doc.setFillColor(52, 152, 219);
+        doc.rect(0, y, 210, 10, "F");
+
+        // Save PDF
+        doc.save(`invoice_${data.name}_${data.roomNumber}.pdf`);
+    }
 
     return (
         <div className={styles.main}>
@@ -155,6 +226,7 @@ export default function ClientTable() {
                         <th>IC</th>
                         <th>Phone</th>
                         <th>Room Number</th>
+                        <th>Action</th> {/* ✅ New header */}
                     </tr>
                     </thead>
                     <tbody></tbody>
