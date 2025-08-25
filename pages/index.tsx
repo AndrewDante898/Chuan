@@ -4,35 +4,56 @@ import { useState } from 'react';
 import axios from 'axios';
 import styles from './index.module.css';
 
+type Entry = {
+  docNo: string;                 // ✅ new
+  name: string;
+  ic: string;
+  phone: string;
+  roomNumber: string;
+  created_at: string;            // ISO string for check-in
+  checked_out_at: string | null; // ✅ new, for later use
+};
+
 export default function Home() {
   const [name, setName] = useState('');
   const [ic, setIc] = useState('');
   const [phone, setPhone] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
   const [success, setSuccess] = useState<string | null>(null);
-  const [entries, setEntries] = useState<{ name: string; ic: string; phone: string; roomNumber: string; created_at: string }[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
+
+  // ✅ client-side generator (server will also enforce uniqueness)
+  function generateDocNo() {
+    const dt = new Date();
+    const ymd = dt.toISOString().slice(0,10).replace(/-/g, ''); // YYYYMMDD
+    const rand = Math.random().toString(36).slice(2, 8).toUpperCase(); // 6 chars
+    return `LGH-${ymd}-${rand}`;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const currentTime = new Date().toLocaleString(); // Get the current date and time
-    const newEntry = { name, ic, phone, roomNumber, created_at: currentTime };
+
+    const newEntry: Entry = {
+      docNo: generateDocNo(),
+      name,
+      ic,
+      phone,
+      roomNumber,
+      created_at: new Date().toISOString(), // ✅ store ISO for reliable date filters/exports
+      checked_out_at: null,                 // ✅ set now, we'll fill on check-out later
+    };
 
     try {
-      // Send POST request to the API route
+      // POST to API; server will also generate a docNo if missing and return saved record
       const response = await axios.post('/api/InsertCustomerData', newEntry);
 
       if (response.status === 200) {
-        // Add new entry to the list
-        setEntries([...entries, newEntry]);
+        const saved: Entry = response.data?.record ?? newEntry;
 
-        // Set success message and clear form fields
-        setSuccess('Data submitted successfully!');
-        setName('');
-        setIc('');
-        setPhone('');
-        setRoomNumber('');
+        setEntries(prev => [...prev, saved]);
+        setSuccess(`Saved! Doc No: ${saved.docNo}`);
+        setName(''); setIc(''); setPhone(''); setRoomNumber('');
 
-        // Clear success message after a few seconds
         setTimeout(() => setSuccess(null), 3000);
       }
     } catch (error) {
@@ -47,54 +68,33 @@ export default function Home() {
             <div className={styles.adminForm}>
               <h2>Admin Data Entry</h2>
               {success && <div className={styles.successMessage}>{success}</div>}
+
               <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.formField}>
                   <label htmlFor="name" className={styles.label}>Name:</label>
-                  <input
-                      id="name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className={styles.input}
-                  />
+                  <input id="name" type="text" value={name}
+                         onChange={(e) => setName(e.target.value)} required className={styles.input} />
                 </div>
+
                 <div className={styles.formField}>
                   <label htmlFor="ic" className={styles.label}>IC:</label>
-                  <input
-                      id="ic"
-                      type="text"
-                      value={ic}
-                      onChange={(e) => setIc(e.target.value)}
-                      required
-                      className={styles.input}
-                  />
+                  <input id="ic" type="text" value={ic}
+                         onChange={(e) => setIc(e.target.value)} required className={styles.input} />
                 </div>
+
                 <div className={styles.formField}>
                   <label htmlFor="phone" className={styles.label}>Phone:</label>
-                  <input
-                      id="phone"
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                      className={styles.input}
-                  />
+                  <input id="phone" type="tel" value={phone}
+                         onChange={(e) => setPhone(e.target.value)} required className={styles.input} />
                 </div>
+
                 <div className={styles.formField}>
                   <label htmlFor="roomNumber" className={styles.label}>Room Number:</label>
-                  <input
-                      id="roomNumber"
-                      type="text"
-                      value={roomNumber}
-                      onChange={(e) => setRoomNumber(e.target.value)}
-                      required
-                      className={styles.input}
-                  />
+                  <input id="roomNumber" type="text" value={roomNumber}
+                         onChange={(e) => setRoomNumber(e.target.value)} required className={styles.input} />
                 </div>
-                <button type="submit" className={styles.submitButton}>
-                  Submit
-                </button>
+
+                <button type="submit" className={styles.submitButton}>Submit</button>
               </form>
             </div>
 
@@ -106,7 +106,7 @@ export default function Home() {
                   <th>IC</th>
                   <th>Phone</th>
                   <th>Room Number</th>
-                  <th>Time Submitted</th> {/* New column for time */}
+                  <th>Time Submitted</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -116,12 +116,14 @@ export default function Home() {
                       <td>{entry.ic}</td>
                       <td>{entry.phone}</td>
                       <td>{entry.roomNumber}</td>
-                      <td>{entry.created_at}</td> {/* Display the time */}
+                      {/* we now store ISO; render as local string */}
+                      <td>{new Date(entry.created_at).toLocaleString()}</td>
                     </tr>
                 ))}
                 </tbody>
               </table>
             </div>
+
           </div>
         </main>
       </div>
