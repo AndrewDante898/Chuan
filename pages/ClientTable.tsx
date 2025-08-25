@@ -301,41 +301,11 @@ export default function ClientTable() {
                         <button
                             type="button"
                             onClick={handleExport}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full
-             bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500
-             text-white font-semibold tracking-wide shadow-md
-             hover:shadow-lg hover:from-emerald-600 hover:to-teal-600
-             active:scale-95 transition-all duration-200 ease-out"
+                            className="px-4 py-2 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600
+             text-white font-semibold shadow-md hover:shadow-lg
+             transition-all duration-200 ease-in-out transform hover:scale-105"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" strokeWidth="1.8"
-                                 stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M12 4v12m0 0l-4-4m4 4l4-4m-9 8h10a2 2 0 002-2V6a2 2 0 00-2-2H9l-2 2" />
-                            </svg>
-                            Export to Excel
-                        </button>
-
-                        <div className={styles.buttonGroup}>
-                        <button type="submit" className={styles.searchButton}>
-                            Search
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleExport}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full
-             bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500
-             text-white font-semibold tracking-wide shadow-md
-             hover:shadow-lg hover:from-emerald-600 hover:to-teal-600
-             active:scale-95 transition-all duration-200 ease-out"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" strokeWidth="1.8"
-                                 stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M12 4v12m0 0l-4-4m4 4l4-4m-9 8h10a2 2 0 002-2V6a2 2 0 00-2-2H9l-2 2" />
-                            </svg>
-                            Export to Excel
+                            📊 Export to Excel
                         </button>
 
                     </div>
